@@ -13,7 +13,7 @@ function love.load()
 
     math.randomseed(os.time())
 
-    font = love.graphics.newFont('fonts/font.ttf', 12)
+    font = love.graphics.newFont('fonts/font.TTF', 12)
     love.graphics.setFont(font)
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -92,16 +92,18 @@ function love.keypressed(key)
 end
 
 function love.draw()
-    push:apply('start')
+    love.graphics.push()
+        push:apply('start')
 
-    love.graphics.clear(40 / 255, 45 / 255, 52 / 255, 255 / 255)
+        love.graphics.clear(40 / 255, 45 / 255, 52 / 255, 255 / 255)
 
-    love.graphics.setFont(font)
+        love.graphics.setFont(font)
 
-    love.graphics.rectangle('fill', 10, player1Y, 5, 30)
-    love.graphics.rectangle('fill', VIRTUAL_WIDTH - 15, player2Y, 5, 30)
+        love.graphics.rectangle('fill', 10, player1Y, 5, 30)
+        love.graphics.rectangle('fill', VIRTUAL_WIDTH - 15, player2Y, 5, 30)
 
-    love.graphics.circle('fill', ballX, ballY, 4)
+        love.graphics.circle('fill', ballX, ballY, 4)
 
-    push:apply('end')
+        push:apply('end')
+    love.graphics.pop()
 end
