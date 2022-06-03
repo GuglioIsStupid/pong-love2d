@@ -18,9 +18,12 @@ function love.load()
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
-        resizable = false,
+        resizable = true,
         vsync = true
     })
+
+    player1Points = 0
+    player2Points = 0
 
     player1Y = 30
     player2Y = VIRTUAL_HEIGHT - 50
@@ -53,9 +56,17 @@ function love.update(dt)
 
     -- screen boundries
     if ballX >= VIRTUAL_WIDTH - 4 then
-        gameState = 'end'
+        player1Points = player1Points + 1
+        ballX = VIRTUAL_WIDTH / 2 - 2
+        ballY = VIRTUAL_HEIGHT / 2 - 2
+        ballDX, ballDY = -ballDX, -ballDY
+        gameState = 'start'
     elseif ballX <= 0 + 4 then
-        gameState = 'end'
+        player2Points = player2Points + 1
+        ballX = VIRTUAL_WIDTH / 2 - 2
+        ballY = VIRTUAL_HEIGHT / 2 - 2
+        ballDX, ballDY = -ballDX, -ballDY
+        gameState = 'start'
     elseif ballY >= VIRTUAL_HEIGHT - 4 then
         ballDY = -ballDY
     elseif ballY <= 0 then
@@ -103,6 +114,9 @@ function love.draw()
         love.graphics.rectangle('fill', VIRTUAL_WIDTH - 15, player2Y, 5, 30)
 
         love.graphics.circle('fill', ballX, ballY, 4)
+
+        love.graphics.printf(tostring(player1Points), 432 / 2 - 95, 243 / 4, 30, "center", 0, 2, 2)
+        love.graphics.printf(tostring(player2Points), 432 / 2 + 75, 243 / 4, 30, "center", 0, 2, 2)
 
         push:apply('end')
     love.graphics.pop()
