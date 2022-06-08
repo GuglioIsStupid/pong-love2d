@@ -65,7 +65,7 @@ function love.update(dt)
         gameState = 'start'
     elseif ballY >= lovesize.getHeight() - 4 then
         ballDY = -ballDY
-    elseif ballY <= 0 then
+    elseif ballY <= 0 + 4 then
         ballDY = -ballDY
     end
     -- player boundries
