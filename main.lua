@@ -7,7 +7,7 @@ function love.load()
     math.randomseed(os.time())
     PADDLE_SPEED = 175
 
-    font = love.graphics.newFont('fonts/font.TTF', 12)
+    font = love.graphics.newFont('fonts/main.ttf', 12)
     love.graphics.setFont(font)
 
     love.window.setMode(1280, 720, {
