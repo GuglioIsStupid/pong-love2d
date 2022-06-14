@@ -6,11 +6,13 @@ function love.load()
 
     math.randomseed(os.time())
     PADDLE_SPEED = 175
+    windowX, windowY = love.window.getPosition()
+    SpinAmount = 0
 
     font = love.graphics.newFont('fonts/main.ttf', 12)
     love.graphics.setFont(font)
 
-    love.window.setMode(1280, 720, {
+    love.window.setMode(1280/2, 720/2, {
         fullscreen = false,
         resizable = true,
         vsync = true
@@ -29,10 +31,16 @@ function love.load()
     ballDX = math.random(2) == 1 and 100 or -100
     ballDY = math.random(-50, 50)
 
-    gameState = 'start'
+    playing = false
 end
 
 function love.update(dt)
+    --[[
+    thisX, thisY = math.sin(SpinAmount * (SpinAmount / 2)) * 100, math.sin(SpinAmount * (SpinAmount)) * 100
+	xVal, yVal = windowX + thisX, windowY + thisY
+	love.window.setPosition(xVal, yVal)
+	SpinAmount = SpinAmount + 1.5 * love.timer.getDelta()
+    ]]--
     graphics.screenBase(lovesize.getWidth(), lovesize.getHeight())
     if love.keyboard.isDown('w') then
         player1Y = math.max(0, player1Y - PADDLE_SPEED * dt)
@@ -45,7 +53,7 @@ function love.update(dt)
         player2Y = math.min(lovesize.getHeight() - 20, player2Y + PADDLE_SPEED * dt)
     end
 
-    if gameState == 'play' then
+    if playing then
         ballX = ballX + ballDX * dt
         ballY = ballY + ballDY * dt
     end
@@ -56,13 +64,13 @@ function love.update(dt)
         ballX = lovesize.getWidth() / 2 - 2
         ballY = lovesize.getHeight() / 2 - 2
         ballDX, ballDY = -ballDX, -ballDY
-        gameState = 'start'
+        playing = false
     elseif ballX <= 0 + 4 then
         player2Points = player2Points + 1
         ballX = lovesize.getWidth() / 2 - 2
         ballY = lovesize.getHeight() / 2 - 2
         ballDX, ballDY = -ballDX, -ballDY
-        gameState = 'start'
+        playing = false
     elseif ballY >= lovesize.getHeight() - 4 then
         ballDY = -ballDY
     elseif ballY <= 0 + 4 then
@@ -87,10 +95,10 @@ function love.keypressed(key)
     if key == 'escape' then
         love.event.quit()
     elseif key == 'enter' or key == 'return' then
-        if gameState == 'start' then
-            gameState = 'play'
+        if not playing then
+            playing = true
         else
-            gameState = 'start'
+            playing = false
 
             ballX = lovesize.getWidth() / 2 - 2
             ballY = lovesize.getHeight() / 2 - 2
