@@ -12,7 +12,7 @@ function love.load()
     font = love.graphics.newFont('fonts/main.ttf', 12)
     love.graphics.setFont(font)
 
-    love.window.setMode(1280/2, 720/2, {
+    love.window.setMode(640, 360, {
         fullscreen = false,
         resizable = true,
         vsync = true
