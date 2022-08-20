@@ -1,9 +1,9 @@
 function love.load()
     love.graphics.setDefaultFilter('nearest')
 
-    lovesize = require 'lib.lovesize'
+    lovesize = require 'lib.lovesize' -- I am in love with this library
     graphics = require "modules.graphics" -- module by HTV04
-    Timer = require "lib.timer"
+    Timer = require "lib.timer"           -- why did i even add that tho
 
     math.randomseed(os.time())
     PADDLE_SPEED = 175
